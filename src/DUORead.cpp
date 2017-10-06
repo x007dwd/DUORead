@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 //	SetExposure(50);
     SetAutoExpose(true);
     SetLed(25);
-/*
+
     bool first = true;
     // Run capture loop until <Esc> key is pressed
 //    while ((cvWaitKey(1) & 0xff) != 27) {

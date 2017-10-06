@@ -141,14 +141,13 @@ DUOCallback(const PDUOFrame pFrameData, void *pUserData) {
     right.create(_pFrameData->height, _pFrameData->width, CV_8U);
     left.data = _pFrameData->leftData;
     right.data = _pFrameData->rightData;
-    std::stringstream ss;
-    ss << "left" << _pFrameData->timeStamp;
+    std::stringstream ss, ss1;
+    ss << "left" << _pFrameData->timeStamp << ".png";
     std::string left_name = ss.str();
-    ss.clear();
-    ss << "right" << _pFrameData->timeStamp;
-    std::string right_name = ss.str();
-    //cv::imwrite(left_name, left);
-    //cv::imwrite(right_name, right);
+    ss1 << "right" << _pFrameData->timeStamp << ".png";
+    std::string right_name = ss1.str();
+    cv::imwrite(left_name, left);
+    cv::imwrite(right_name, right);
 
 
     printf("DUO Frame Timestamp: %10.1f ms\n", pFrameData->timeStamp / 10.0f);
