@@ -35,32 +35,32 @@ int main(int argc, char *argv[]) {
 /*
     bool first = true;
     // Run capture loop until <Esc> key is pressed
-    while ((cvWaitKey(1) & 0xff) != 27) {
-        // Capture DUO frame
-        PDUOFrame pFrameData = GetDUOFrame();
-        if (pFrameData == NULL) continue;
+//    while ((cvWaitKey(1) & 0xff) != 27) {
+//        // Capture DUO frame
+//        PDUOFrame pFrameData = GetDUOFrame();
+//        if (pFrameData == NULL) continue;
+//
+////         Set the image data
+//        if (first) {
+//            first = false;
+//            left = cvCreateImageHeader(cvSize(WIDTH, HEIGHT), IPL_DEPTH_8U, 1);
+//            right = cvCreateImageHeader(cvSize(WIDTH, HEIGHT), IPL_DEPTH_8U, 1);
+//        }
+//        left->imageData = (char *) pFrameData->leftData;
+//        right->imageData = (char *) pFrameData->rightData;
+//
+//        // Process images here (optional)
+//
+//        // Display images
+//        cvShowImage("Left", left);
+//        cvShowImage("Right", right);
+//    }
+//    cvDestroyAllWindows();
+//
+//    // Release image headers
+//    cvReleaseImageHeader(&left);
+//    cvReleaseImageHeader(&right);
 
-//         Set the image data
-        if (first) {
-            first = false;
-            left = cvCreateImageHeader(cvSize(WIDTH, HEIGHT), IPL_DEPTH_8U, 1);
-            right = cvCreateImageHeader(cvSize(WIDTH, HEIGHT), IPL_DEPTH_8U, 1);
-        }
-        left->imageData = (char *) pFrameData->leftData;
-        right->imageData = (char *) pFrameData->rightData;
-
-        // Process images here (optional)
-
-        // Display images
-        cvShowImage("Left", left);
-        cvShowImage("Right", right);
-    }
-    cvDestroyAllWindows();
-
-    // Release image headers
-    cvReleaseImageHeader(&left);
-    cvReleaseImageHeader(&right);
-*/
     // Close DUO camera
     CloseDUOCamera();
     return 0;
