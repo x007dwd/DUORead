@@ -6,9 +6,9 @@ project(DUORead)
 if (DEFINED ENV{DUO_SDK})
     set(DUO_SDK $ENV{DUO_SDK})
 else ()
-    set(DUO_SDK ${CMAKE_CURRENT_SOURCE_DIR}/SDK)
+    set(DUO_SDK ${PROJECT_SOURCE_DIR}/SDK)
 endif ()
-
+message("SDK dir${DUO_SDK}")
 # Add DUO include
 include_directories(${DUO_SDK}/include)
 
