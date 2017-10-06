@@ -213,8 +213,17 @@ static bool OpenDUOCamera(int width, int height, float fps) {
     SetDUOResolutionInfo(_duo, ri);
 
     // Start capture
-    if (!StartDUO(_duo, DUOCallback, NULL))
-        return false;
+    if(StartDUO(_duo, DUOCallback, NULL))
+    {
+        // Wait for any key
+        _getch();
+        // Stop capture
+        StopDUO(_duo);
+        // Close DUO
+        CloseDUO(_duo);
+    }
+//    if (!StartDUO(_duo, DUOCallback, NULL))
+//        return false;
 
     return true;
 }
