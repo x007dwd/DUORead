@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     cvNamedWindow("Right");
 
     // Create image headers for left & right frames
-//    IplImage *left, *right;
+    IplImage *left, *right;
 
     // Set exposure and LED brightness
     SetGain(0);
@@ -33,33 +33,33 @@ int main(int argc, char *argv[]) {
     SetAutoExpose(true);
     SetLed(25);
 
-//    bool first = true;
+    bool first = true;
     // Run capture loop until <Esc> key is pressed
     while ((cvWaitKey(1) & 0xff) != 27) {
         // Capture DUO frame
         PDUOFrame pFrameData = GetDUOFrame();
-//        if (pFrameData == NULL) continue;
-//
+        if (pFrameData == NULL) continue;
+
 //         Set the image data
-//        if (first) {
-//            first = false;
-//            left = cvCreateImageHeader(cvSize(WIDTH, HEIGHT), IPL_DEPTH_8U, 1);
-//            right = cvCreateImageHeader(cvSize(WIDTH, HEIGHT), IPL_DEPTH_8U, 1);
-//        }
-//        left->imageData = (char *) pFrameData->leftData;
-//        right->imageData = (char *) pFrameData->rightData;
+        if (first) {
+            first = false;
+            left = cvCreateImageHeader(cvSize(WIDTH, HEIGHT), IPL_DEPTH_8U, 1);
+            right = cvCreateImageHeader(cvSize(WIDTH, HEIGHT), IPL_DEPTH_8U, 1);
+        }
+        left->imageData = (char *) pFrameData->leftData;
+        right->imageData = (char *) pFrameData->rightData;
 
         // Process images here (optional)
 
         // Display images
-//        cvShowImage("Left", left);
-//        cvShowImage("Right", right);
+        cvShowImage("Left", left);
+        cvShowImage("Right", right);
     }
     cvDestroyAllWindows();
 
     // Release image headers
-//    cvReleaseImageHeader(&left);
-//    cvReleaseImageHeader(&right);
+    cvReleaseImageHeader(&left);
+    cvReleaseImageHeader(&right);
 
     // Close DUO camera
     CloseDUOCamera();
