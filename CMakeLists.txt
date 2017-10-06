@@ -59,3 +59,9 @@ add_executable(DUORead src/DUORead.cpp)
 
 find_package(OpenCV REQUIRED)
 target_link_libraries(DUORead ${DUO_LIBRARY} ${OpenCV_LIBS})
+
+add_executable(test_DUOReader src/testDUOReader.cpp
+        src/DUOReader.cpp
+        )
+
+target_link_libraries(test_DUOReader ${DUO_LIBRARY} ${OpenCV_LIBS})
