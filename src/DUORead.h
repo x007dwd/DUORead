@@ -6,6 +6,7 @@
 #ifndef SAMPLE_H
 #define SAMPLE_H
 
+#include <opencv2/core/core.hpp>
 // Include some generic header files
 #if defined(WIN32)
 #include <SDKDDKVer.h>
@@ -134,6 +135,13 @@ static void CALLBACK
 DUOCallback(const PDUOFrame pFrameData, void *pUserData) {
     _pFrameData = pFrameData;
     SetEvent(_evFrame);
+    cv::Mat left, right;
+    left.create(_pFrameData->height, _pFrameData->width, CV_8U);
+    right.create(_pFrameData->height, _pFrameData->width, CV_8U);
+    left.data = _pFrameData->leftData;
+    right.data = _pFrameData->rightData;
+    cv::imshow("left", left);
+    cv::imshow("right", right);
 
     printf("DUO Frame Timestamp: %10.1f ms\n", pFrameData->timeStamp / 10.0f);
     if (pFrameData->IMUPresent) {
