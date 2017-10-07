@@ -4,6 +4,8 @@
 
 #include "DUOReader.h"
 #include <stdio.h>
+#include <opencv2/calib3d/calib3d.hpp>
+
 
 DUOReader::DUOReader() {
     _evFrame = CreateEvent(NULL, 0, 0, NULL);
@@ -12,6 +14,7 @@ DUOReader::DUOReader() {
 DUOReader::~DUOReader() {
 
 }
+
 // Opens, sets current image format, fps and start capturing
 bool DUOReader::OpenDUOCamera(int width, int height, float fps) {
     if (_duo != NULL) {
@@ -56,8 +59,7 @@ bool DUOReader::OpenDUOCamera(int width, int height, float fps) {
     // Set selected resolution
     SetDUOResolutionInfo(_duo, ri);
 
-
-
+    GetStereo();
     return true;
 }
 
@@ -65,7 +67,6 @@ void DUOReader::StartDUOFrame(DUOFrameCallback frameCallback) {
     // Start capture
     if (StartDUO(_duo, frameCallback, NULL)) {
         // Wait for any key
-        _getch();
         // Stop capture
         StopDUO(_duo);
         // Close DUO
@@ -128,6 +129,61 @@ void DUOReader::SetIMURate(double rate) {
     SetDUOIMURate(_duo, rate);
 
 }
+
+void DUOReader::GetLeftIntrinsic(cv::Mat &left_intr) {
+    left_intr.create(3, 3, CV_64F);
+    memcpy(left_intr.data, mStereo.M1, 9 * sizeof(double));
+}
+
+
+void DUOReader::GetRightIntrinsic(cv::Mat &right_intr) {
+    right_intr.create(3, 3, CV_64F);
+    memcpy(right_intr.data, mStereo.M2, 9 * sizeof(double));
+}
+
+void DUOReader::GetLeftDistort(cv::Mat &left_dist) {
+    left_dist.create(1, 8, CV_64F);
+    memcpy(left_dist.data, mStereo.D1, 8 * sizeof(double));
+}
+
+void DUOReader::GetRightDistort(cv::Mat &right_dist) {
+    right_dist.create(1, 8, CV_64F);
+    memcpy(right_dist.data, mStereo.D2, 8 * sizeof(double));
+}
+
+void DUOReader::GetExntrinsic(cv::Mat &_extr) {
+    _extr = cv::Mat::zeros(4, 4, CV_64F);
+    cv::Mat rot(3, 3, CV_64F);
+    cv::Mat trans(1, 3, CV_64F);
+    memcpy(rot.data, mExtr.rotation, 9 * sizeof(double));
+    memcpy(trans.data, mExtr.translation, 3 * sizeof(double));
+    rot.copyTo(_extr(cv::Rect(0, 0, 3, 3)));
+    rot.copyTo(_extr(cv::Rect(0, 3, 1, 3)));
+}
+
+void DUOReader::GetStereo() {
+    if (_duo == NULL)
+        return;
+    bool status;
+    GetDUOCalibrationPresent(_duo, &status);
+    if (status == false)
+        return;
+    GetDUOStereoParameters(_duo, &mStereo);
+    std::cout << "Intrinsic parameters from camera"<< std::endl;
+    for (int i = 0; i < 3; ++i) {
+        std::cout << mStereo.M1[3 * i + 0] << mStereo.M1[3 * i + 1] << mStereo.M1[3 * i + 2] << std::endl;
+    }
+}
+
+void DUOReader::GetCalib() {
+    bool status;
+    GetDUOCalibrationPresent(_duo, &status);
+    if (status == true) {
+        GetDUOExtrinsics(_duo, &mExtr);
+        GetDUOIntrinsics(_duo, &mIntr);
+    }
+}
+
 void DUOReader::initTermios(int echo) {
     tcgetattr(0, &_old); /* grab old terminal i/o settings */
     _new = _old; /* make new settings same as old settings */

@@ -52,6 +52,22 @@ public:
 
     void SetIMURate(double rate);
 
+    void GetLeftIntrinsic(cv::Mat &left_intr);
+
+    void GetRightIntrinsic(cv::Mat &right_intr);
+
+    void GetLeftDistort(cv::Mat &left_dist);
+
+    void GetRightDistort(cv::Mat &right_dist);
+
+    void GetLeftRectMat(cv::Mat& left_rect);
+
+    void GetRightRectMat(cv::Mat& right_rect);
+
+
+    void GetExntrinsic(cv::Mat &extr);
+
+
 private:
 
     void initTermios(int echo);
@@ -67,7 +83,9 @@ private:
 
     int _kbhit(void);
 
+    void GetCalib();
 
+    void GetStereo();
 
     event_flag *CreateEvent(void *lpEventAttributes, bool bManualReset, bool bInitialState, char *name);
 
@@ -80,6 +98,10 @@ private:
 
     DUOInstance _duo = NULL;
     PDUOFrame _pFrameData = NULL;
+
+    DUO_STEREO mStereo;
+    DUO_EXTR mExtr;
+    DUO_INTR mIntr;
 
     struct termios _old, _new;
 };
