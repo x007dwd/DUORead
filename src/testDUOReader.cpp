@@ -19,9 +19,9 @@ void CALLBACK DUOCallback(const PDUOFrame pFrameData, void *pUserData) {
     std::string right_name = ss1.str();
     //cv::imshow(left_name, left);
     //cv::imshow(right_name, right);
-    cv::imshow("left", left);
-    cv::imshow("right", right);
-    cv::waitKey(1);
+    //cv::waitKey(1);
+
+
     printf("DUO Frame Timestamp: %10.1f ms\n", pFrameData->timeStamp / 10.0f);
     if (pFrameData->IMUPresent) {
         for (int i = 0; i < pFrameData->IMUSamples; i++) {
@@ -49,6 +49,7 @@ int main(int argc, char**argv){
 //	duo_reader.SetExposure(50);
     duo_reader.SetAutoExpose(true);
     duo_reader.SetLed(25);
+    duo_reader.SetIMURate(200);
     duo_reader.StartDUOFrame(DUOCallback);
     duo_reader.CloseDUOCamera();
 
