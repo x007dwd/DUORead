@@ -60,10 +60,13 @@ public:
 
     void GetRightDistort(cv::Mat &right_dist);
 
-    void GetLeftRectMat(cv::Mat& left_rect);
+    void GetLeftRectRot(cv::Mat &left_rect);
 
-    void GetRightRectMat(cv::Mat& right_rect);
+    void GetLeftRectProj(cv::Mat &left_rect);
 
+    void GetRightRectRot(cv::Mat &right_rect);
+
+    void GetRightRectProj(cv::Mat &right_rect);
 
     void GetExntrinsic(cv::Mat &extr);
 

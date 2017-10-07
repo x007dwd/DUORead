@@ -151,6 +151,26 @@ void DUOReader::GetRightDistort(cv::Mat &right_dist) {
     memcpy(right_dist.data, mStereo.D2, 8 * sizeof(double));
 }
 
+void DUOReader::GetLeftRectRot(cv::Mat &left_rect) {
+    left_rect.create(3, 3, CV_64F);
+    memcpy(left_rect.data, mStereo.R1, 9 * sizeof(double));
+}
+
+void DUOReader::GetLeftRectProj(cv::Mat &left_rect) {
+    left_rect.create(3, 4, CV_64F);
+    memcpy(left_rect.data, mStereo.P1, 12 * sizeof(double));
+}
+
+void DUOReader::GetRightRectRot(cv::Mat &right_rect) {
+    right_rect.create(3, 3, CV_64F);
+    memcpy(right_rect.data, mStereo.R2, 9 * sizeof(double));
+}
+
+void DUOReader::GetRightRectProj(cv::Mat &right_rect) {
+    right_rect.create(3, 4, CV_64F);
+    memcpy(right_rect.data, mStereo.P2, 12 * sizeof(double));
+}
+
 void DUOReader::GetExntrinsic(cv::Mat &_extr) {
     _extr = cv::Mat::zeros(4, 4, CV_64F);
     cv::Mat rot(3, 3, CV_64F);
@@ -169,30 +189,34 @@ void DUOReader::GetStereo() {
     if (status == false)
         return;
     GetDUOStereoParameters(_duo, &mStereo);
-    std::cout << "left intrinsic parameters from camera"<< std::endl;
+    std::cout << "left intrinsic parameters from camera" << std::endl;
     for (int i = 0; i < 3; ++i) {
-        std::cout << ' ' << mStereo.M1[3 * i + 0] << ' ' << mStereo.M1[3 * i + 1] << ' ' << mStereo.M1[3 * i + 2] << std::endl;
+        std::cout << ' ' << mStereo.M1[3 * i + 0] << ' ' << mStereo.M1[3 * i + 1] << ' ' << mStereo.M1[3 * i + 2]
+                  << std::endl;
     }
-    std::cout << "right intrinsic parameters from camera"<< std::endl;
+    std::cout << "right intrinsic parameters from camera" << std::endl;
     for (int i = 0; i < 3; ++i) {
-        std::cout << ' ' << mStereo.M2[3 * i + 0] << ' ' << mStereo.M2[3 * i + 1] << ' ' << mStereo.M2[3 * i + 2] << std::endl;
+        std::cout << ' ' << mStereo.M2[3 * i + 0] << ' ' << mStereo.M2[3 * i + 1] << ' ' << mStereo.M2[3 * i + 2]
+                  << std::endl;
     }
 
-    std::cout << "left distortion parameters from camera"<< std::endl;
+    std::cout << "left distortion parameters from camera" << std::endl;
     for (int i = 0; i < 8; ++i) {
         std::cout << ' ' << mStereo.D1[i] << std::endl;
     }
-    std::cout << "right distortion parameters from camera"<< std::endl;
+    std::cout << "right distortion parameters from camera" << std::endl;
     for (int i = 0; i < 8; ++i) {
         std::cout << ' ' << mStereo.D2[i] << std::endl;
     }
-    std::cout << "left Rectified projection parameters from camera"<< std::endl;
+    std::cout << "left Rectified projection parameters from camera" << std::endl;
     for (int i = 0; i < 3; ++i) {
-        std::cout << ' ' << mStereo.P1[4*i+0] << ' ' << mStereo.P1[4*i+1] << ' ' << mStereo.P1[4*i+2] << ' ' << mStereo.P1[4*i+3] << std::endl;
+        std::cout << ' ' << mStereo.P1[4 * i + 0] << ' ' << mStereo.P1[4 * i + 1] << ' ' << mStereo.P1[4 * i + 2] << ' '
+                  << mStereo.P1[4 * i + 3] << std::endl;
     }
-    std::cout << "right Rectified projection parameters from camera"<< std::endl;
+    std::cout << "right Rectified projection parameters from camera" << std::endl;
     for (int i = 0; i < 3; ++i) {
-        std::cout << ' ' << mStereo.P2[4*i+0] << ' ' << mStereo.P2[4*i+1] << ' ' << mStereo.P2[4*i+2] << ' ' << mStereo.P2[4*i+3] << std::endl;
+        std::cout << ' ' << mStereo.P2[4 * i + 0] << ' ' << mStereo.P2[4 * i + 1] << ' ' << mStereo.P2[4 * i + 2] << ' '
+                  << mStereo.P2[4 * i + 3] << std::endl;
     }
 }
 
