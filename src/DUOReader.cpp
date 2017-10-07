@@ -67,6 +67,7 @@ void DUOReader::StartDUOFrame(DUOFrameCallback frameCallback) {
     // Start capture
     if (StartDUO(_duo, frameCallback, NULL)) {
         // Wait for any key
+        _getch();
         // Stop capture
         StopDUO(_duo);
         // Close DUO
