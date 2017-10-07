@@ -18,8 +18,8 @@ void CALLBACK DUOCallback(const PDUOFrame pFrameData, void *pUserData) {
     ss.clear();
     ss << "right" << _pFrameData->timeStamp;
     std::string right_name = ss.str();
-    cv::imshow(left_name, left);
-    cv::imshow(right_name, right);
+//    cv::imshow(left_name, left);
+//    cv::imshow(right_name, right);
 
 
     printf("DUO Frame Timestamp: %10.1f ms\n", pFrameData->timeStamp / 10.0f);
@@ -49,6 +49,7 @@ int main(int argc, char**argv){
 //	duo_reader.SetExposure(50);
     duo_reader.SetAutoExpose(true);
     duo_reader.SetLed(25);
+    duo_reader.SetIMURate(200);
     duo_reader.StartDUOFrame(DUOCallback);
     duo_reader.CloseDUOCamera();
 

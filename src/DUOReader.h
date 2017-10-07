@@ -50,6 +50,8 @@ public:
 
     void SetLed(float value);
 
+    void SetIMURate(double rate);
+
 private:
 
     void initTermios(int echo);

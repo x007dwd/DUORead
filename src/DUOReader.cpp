@@ -121,6 +121,13 @@ void DUOReader::SetLed(float value) {
     SetDUOLedPWM(_duo, value);
 }
 
+
+void DUOReader::SetIMURate(double rate) {
+    if (_duo == NULL)
+        return;
+    SetDUOIMURate(_duo, rate);
+
+}
 void DUOReader::initTermios(int echo) {
     tcgetattr(0, &_old); /* grab old terminal i/o settings */
     _new = _old; /* make new settings same as old settings */
