@@ -170,9 +170,30 @@ void DUOReader::GetStereo() {
     if (status == false)
         return;
     GetDUOStereoParameters(_duo, &mStereo);
-    std::cout << "Intrinsic parameters from camera"<< std::endl;
+    std::cout << "left intrinsic parameters from camera"<< std::endl;
     for (int i = 0; i < 3; ++i) {
-        std::cout << mStereo.M1[3 * i + 0] << mStereo.M1[3 * i + 1] << mStereo.M1[3 * i + 2] << std::endl;
+        std::cout << ' ' << mStereo.M1[3 * i + 0] << ' ' << mStereo.M1[3 * i + 1] << ' ' << mStereo.M1[3 * i + 2] << std::endl;
+    }
+    std::cout << "right intrinsic parameters from camera"<< std::endl;
+    for (int i = 0; i < 3; ++i) {
+        std::cout << ' ' << mStereo.M2[3 * i + 0] << ' ' << mStereo.M2[3 * i + 1] << ' ' << mStereo.M2[3 * i + 2] << std::endl;
+    }
+
+    std::cout << "left distortion parameters from camera"<< std::endl;
+    for (int i = 0; i < 8; ++i) {
+        std::cout << ' ' << mStereo.D1[i] << std::endl;
+    }
+    std::cout << "right distortion parameters from camera"<< std::endl;
+    for (int i = 0; i < 8; ++i) {
+        std::cout << ' ' << mStereo.D2[i] << std::endl;
+    }
+    std::cout << "left Rectified projection parameters from camera"<< std::endl;
+    for (int i = 0; i < 3; ++i) {
+        std::cout << ' ' << mStereo.P1[4*i+0] << ' ' << mStereo.P1[4*i+1] << ' ' << mStereo.P1[4*i+2] << ' ' << mStereo.P1[4*i+3] << std::endl;
+    }
+    std::cout << "right Rectified projection parameters from camera"<< std::endl;
+    for (int i = 0; i < 3; ++i) {
+        std::cout << ' ' << mStereo.P2[4*i+0] << ' ' << mStereo.P2[4*i+1] << ' ' << mStereo.P2[4*i+2] << ' ' << mStereo.P2[4*i+3] << std::endl;
     }
 }
 
