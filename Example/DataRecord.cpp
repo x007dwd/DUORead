@@ -12,7 +12,7 @@
 #include <iomanip>
 #include <fstream>
 
-std::string data_path_root = "~/data/duo/R0/";
+std::string data_path_root = "/home/ubuntu/data/duo/R0/";
 std::string data_path_imu = data_path_root + "imu/imu.txt";
 std::string data_path_cam0 = data_path_root + "cam0/";
 std::string data_path_cam1 = data_path_root + "cam1/";
