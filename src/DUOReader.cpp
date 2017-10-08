@@ -131,6 +131,12 @@ void DUOReader::SetIMURate(double rate) {
 
 }
 
+void DUOReader::SetUndistort(bool value) {
+    if (_duo == NULL)
+        return;
+    SetDUOUndistort(_duo, value);
+}
+
 void DUOReader::GetLeftIntrinsic(cv::Mat &left_intr) {
     left_intr.create(3, 3, CV_64F);
     memcpy(left_intr.data, mStereo.M1, 9 * sizeof(double));

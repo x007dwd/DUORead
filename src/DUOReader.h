@@ -44,6 +44,8 @@ public:
 
     void SetAutoExpose(bool value);
 
+    void SetUndistort(bool value);
+
     void SetExposure(float value);
 
     void SetGain(float value);
