@@ -49,7 +49,7 @@ void CALLBACK DUOCallback(const PDUOFrame pFrameData, void *pUserData) {
             printf("  Temperature:   %8.6f C\n", pFrameData->IMUData[i].tempData);
 
             ofs << std::fixed << std::setprecision(20) << pFrameData->IMUData[i].timeStamp;
-            ofs << std::fixed << std::setprecision(5);
+//            ofs << std::fixed << std::setprecision(5);
             ofs << pFrameData->IMUData[i].accelData[0] << pFrameData->IMUData[i].accelData[0]
                 << pFrameData->IMUData[i].accelData[0];
             ofs << pFrameData->IMUData[i].gyroData[0] << pFrameData->IMUData[i].gyroData[0]
