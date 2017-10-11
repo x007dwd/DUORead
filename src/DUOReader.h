@@ -54,6 +54,8 @@ public:
 
     void SetIMURate(double rate);
 
+    void OutFileStereo(std::string filename);
+
     void GetLeftIntrinsic(cv::Mat &left_intr);
 
     void GetRightIntrinsic(cv::Mat &right_intr);

@@ -3,6 +3,8 @@
 //
 
 #include "DUOReader.h"
+#include <string>
+std::string parameter_file = "/home/ubuntu/data/duo/calib.txt";
 
 void CALLBACK DUOCallback(const PDUOFrame pFrameData, void *pUserData) {
     PDUOFrame _pFrameData = pFrameData;
@@ -50,6 +52,7 @@ int main(int argc, char**argv){
     duo_reader.SetAutoExpose(true);
     duo_reader.SetLed(25);
     duo_reader.SetIMURate(200);
+    duo_reader.OutFileStereo(parameter_file);
     duo_reader.StartDUOFrame(DUOCallback);
     duo_reader.CloseDUOCamera();
 

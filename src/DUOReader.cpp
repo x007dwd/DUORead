@@ -5,7 +5,7 @@
 #include "DUOReader.h"
 #include <stdio.h>
 #include <opencv2/calib3d/calib3d.hpp>
-
+#include <fstream>
 
 DUOReader::DUOReader() {
     _evFrame = CreateEvent(NULL, 0, 0, NULL);
@@ -187,6 +187,65 @@ void DUOReader::GetExntrinsic(cv::Mat &_extr) {
     rot.copyTo(_extr(cv::Rect(0, 0, 3, 3)));
     rot.copyTo(_extr(cv::Rect(0, 3, 1, 3)));
 }
+
+void DUOReader::OutFileStereo(std::string filename) {
+    if (_duo == NULL)
+        return;
+    bool status;
+    GetDUOCalibrationPresent(_duo, &status);
+    std::cout << "left and right camera, IMU parameters" << std::endl;
+    std::ofstream ofs;
+    ofs.open(filename.c_str(), std::ios_base::out);
+    ofs << "left camera intrinsic parameters " << std::endl;
+    for (int i = 0; i <3; ++i) {
+        ofs << ' ' << mStereo.M1[3 * i] << ' ' << mStereo.M1[3 * i + 1] << ' ' << mStereo.M1[3 * i + 2] << std::endl;
+    }
+
+    ofs << "right camera intrinsic parameters " << std::endl;
+    for (int i = 0; i <3; ++i) {
+        ofs << ' ' << mStereo.M2[3 * i] << ' ' << mStereo.M2[3 * i + 1] << ' ' << mStereo.M2[3 * i + 2] << std::endl;
+    }
+
+    ofs << "left distortion parameters from camera" << std::endl;
+    for (int i = 0; i < 8; ++i) {
+        ofs << ' ' << mStereo.D1[i] << std::endl;
+    }
+    ofs << "right distortion parameters from camera" << std::endl;
+    for (int i = 0; i < 8; ++i) {
+        ofs << ' ' << mStereo.D2[i] << std::endl;
+    }
+
+    ofs << "Rotation between left and right camera" << std::endl;
+    for (int i = 0; i < 3; ++i) {
+        ofs << ' ' << mStereo.R[3 * i + 0] << ' ' << mStereo.R[3 * i + 1] << ' ' << mStereo.R[3 * i + 2] << std::endl;
+    }
+
+    ofs << "Translation vector between left and right camera" << std::endl;
+    for (int i = 0; i < 3; ++i) {
+        ofs << ' ' << mStereo.T[i] << std::endl;
+    }
+
+    ofs << "left Rectified rotation parameters from camera" << std::endl;
+    for (int i = 0; i < 3; ++i) {
+        ofs << ' ' << mStereo.R1[3 * i + 0] << ' ' << mStereo.R1[3 * i + 1] << ' ' << mStereo.R1[3 * i + 2] << std::endl;
+    }
+    ofs << "right Rectified projection parameters from camera" << std::endl;
+    for (int i = 0; i < 3; ++i) {
+        ofs << ' ' << mStereo.R2[3 * i + 0] << ' ' << mStereo.R2[3 * i + 1] << ' ' << mStereo.R2[3 * i + 2] << std::endl;
+    }
+
+    ofs << "left Rectified projection parameters from camera" << std::endl;
+    for (int i = 0; i < 3; ++i) {
+        ofs << ' ' << mStereo.P1[4 * i + 0] << ' ' << mStereo.P1[4 * i + 1] << ' ' << mStereo.P1[4 * i + 2] << ' '
+            << mStereo.P1[4 * i + 3] << std::endl;
+    }
+    ofs << "right Rectified projection parameters from camera" << std::endl;
+    for (int i = 0; i < 3; ++i) {
+        ofs << ' ' << mStereo.P2[4 * i + 0] << ' ' << mStereo.P2[4 * i + 1] << ' ' << mStereo.P2[4 * i + 2] << ' '
+            << mStereo.P2[4 * i + 3] << std::endl;
+    }
+}
+
 
 void DUOReader::GetStereo() {
     if (_duo == NULL)
