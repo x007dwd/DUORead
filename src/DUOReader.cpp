@@ -196,6 +196,11 @@ void DUOReader::OutFileStereo(std::string filename) {
     std::cout << "left and right camera, IMU parameters" << std::endl;
     std::ofstream ofs;
     ofs.open(filename.c_str(), std::ios_base::out);
+
+    ofs << "camera fx : " << (mStereo.M1[0] + mStereo.M2[0]) / 2 << std::endl;
+    ofs << "camera fy : " << (mStereo.M1[4] + mStereo.M2[4]) / 2 << std::endl;
+    ofs << "camera cx : " << (mStereo.M1[2] + mStereo.M2[2]) / 2 << std::endl;
+    ofs << "camera cy : " << (mStereo.M1[5] + mStereo.M2[5]) / 2 << std::endl;
     ofs << "left camera intrinsic parameters " << std::endl;
     for (int i = 0; i <3; ++i) {
         ofs << ' ' << mStereo.M1[3 * i] << ' ' << mStereo.M1[3 * i + 1] << ' ' << mStereo.M1[3 * i + 2] << std::endl;
